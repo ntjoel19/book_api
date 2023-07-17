@@ -14,6 +14,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 //app.use(helmet({crossOriginResourcePolicy: false,}));
 app.use(express.json());
 
+mongoose.connect("mongodb+srv://"  + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@cluster0.2jgnqb2.mongodb.net/?retryWrites=true&w=majority",
+{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
