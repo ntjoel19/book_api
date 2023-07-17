@@ -14,13 +14,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 //app.use(helmet({crossOriginResourcePolicy: false,}));
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://"  + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@cluster0.2jgnqb2.mongodb.net/?retryWrites=true&w=majority",
-{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
+mongoose.connect("mongodb+srv://"  + 
+                process.env.DB_USER + ":" + 
+                process.env.DB_PASSWORD + 
+                "@cluster0.kwpeuu4.mongodb.net/?retryWrites=true&w=majority")
+.then(() => console.log('Connexion à MongoDB réussie !'))
+.catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -28,5 +27,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+app.use("/api/auth", userRoutes);
 
 module.exports = app;

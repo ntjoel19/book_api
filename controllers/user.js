@@ -4,17 +4,21 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 exports.signup = (req, res, next) => {
-    const user = new UserModel({
-        email: req.body.email,
-        password: req.body.password
-    })
-
-    user.save()
-        .then(() => res.status(201).json({ message: "User créé !" }))
-        .catch(error => res.status(400).json({ error }))
+    bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+            const user = new UserModel({
+                email: req.body.email,
+                password: hash
+            })
+            console.log(user)
+            user.save()
+                .then(() => res.status(201).json({ message: "User créé !" }))
+                .catch(error => res.status(400).json({ error }))
+        })
+        .catch(error => res.status(500).json({ error }))
 }
 exports.signin = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    UserModel.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: "User non trouvé !" })

@@ -16,11 +16,6 @@ const userSchema = mongoose.Schema({
     }
 });
 
-//has password before saving into db
-userSchema.pre('save', (next)=>{
-    this.password = bcrypt.hashSync(this.password, saltRounds);
-    next();
-})
 
 userSchema.plugin(uniqueValidator);
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("users", userSchema);
