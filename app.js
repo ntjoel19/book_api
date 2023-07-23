@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const userRoutes = require("./routes/user");
+const bookRoutes = require("./routes/book");
 const app = express();
 
 const path = require("path");
@@ -29,5 +30,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/auth", userRoutes);
+app.use("/api/book", bookRoutes);
 
 module.exports = app;
